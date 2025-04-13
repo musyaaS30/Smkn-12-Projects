@@ -1,0 +1,54 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --color-spinel-stone-black: #252a3e;
+  --color-chronicle: #3d4466;
+  --color-velvet-robe: #97a0cc;
+  --color-liberty-blue: #0c1231;
+  --color-cotton-ball: #f0f3ff;
+  --color-boatswain: #263156;
+  --color-dark-rift: #05091b;
+
+  /* Color of poke types */
+  --color-poke-type-normal: #a8a77a;
+  --color-poke-type-fighting: #c22e28;
+  --color-poke-type-flying: #a98ff3;
+  --color-poke-type-poison: #a33ea1;
+  --color-poke-type-ground: #e2bf65;
+  --color-poke-type-rock: #b6a136;
+  --color-poke-type-bug: #a6b91a;
+  --color-poke-type-ghost: #735797;
+  --color-poke-type-steel: #b7b7ce;
+  --color-poke-type-fire: #ee8130;
+  --color-poke-type-water: #6390f0;
+  --color-poke-type-grass: #11b047;
+  --color-poke-type-electric: #f7d02c;
+  --color-poke-type-psychic: #f95587;
+  --color-poke-type-ice: #96d9d6;
+  --color-poke-type-dragon: #6f35fc;
+  --color-poke-type-dark: #705746;
+  --color-poke-type-fairy: #d685ad;
+  --color-poke-type-stellar: #4464b0;
+  --color-poke-type-unknown: #68a090;
+}
+
+* {
+  font-family: "DM Sans", arial;
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}

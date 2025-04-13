@@ -15,10 +15,11 @@ import PokemonDetail from "./pages/detail";
 
 // Constants
 const root = document.getElementById("root");
+const basename = import.meta.env["VITE_APP_BASE_PATH"] || undefined;
 
 ReactDOM.createRoot((root || <></>) as HTMLElement).render(
   <Provider store={store}>
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/:id" element={<PokemonDetail />} />

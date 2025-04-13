@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import classNames from "classnames";
 import { useEffect, useRef, useState } from "react";
-import { PiSquareFill, PiSquaresFourFill } from "react-icons/pi";
 import { motion, AnimatePresence } from "framer-motion";
+import { PiSquareFill, PiSquaresFourFill } from "react-icons/pi";
 
 // Components
 import Navbar from "../../components/Navbar";
@@ -16,6 +16,7 @@ import { useLazyGetPokemonsQuery } from "../../../store/apis/pokemon";
 // Types
 import PokemonEntry from "./types";
 
+// Constants
 const CHUNK_SIZE = 20;
 
 const Home = () => {
@@ -128,14 +129,30 @@ const Home = () => {
   return (
     <div
       ref={scrollContainerRef}
-      className="h-screen overflow-auto bg-spinel-stone-black"
+      className={classNames(
+        "h-screen",
+        "overflow-auto",
+        "bg-spinel-stone-black"
+      )}
     >
       <Navbar onSearch={(term) => setSearchTerm(term)} />
 
-      <div className="flex flex-col gap-y-5 pt-5 px-10 pb-10 md:p-5 mx-auto container">
+      <div
+        className={classNames(
+          "flex",
+          "pt-5",
+          "px-10",
+          "pb-10",
+          "md:p-5",
+          "gap-y-5",
+          "mx-auto",
+          "flex-col",
+          "container"
+        )}
+      >
         {/* Header */}
-        <div className="flex flex-row gap-x-5">
-          <div className="flex-1">
+        <div className={classNames("flex", "flex-row", "gap-x-5")}>
+          <div className={classNames("flex-1")}>
             <SortBy onSort={sortPokemons} />
           </div>
           <div>
@@ -190,7 +207,14 @@ const Home = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4 }}
-              className="flex justify-center items-center h-64 text-gray-400 text-lg"
+              className={classNames(
+                "flex",
+                "justify-center",
+                "items-center",
+                "h-64",
+                "text-gray-400",
+                "text-lg"
+              )}
             >
               No Pokémon found with that name.
             </motion.div>
@@ -199,13 +223,22 @@ const Home = () => {
 
         {/* Loading spinner */}
         {isLoading && (
-          <div className="h-16 mt-4 flex w-full items-center justify-center">
+          <div
+            className={classNames(
+              "h-16",
+              "mt-4",
+              "flex",
+              "w-full",
+              "items-center",
+              "justify-center"
+            )}
+          >
             <motion.span
               key="loading"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
-              className="text-gray-400 text-sm"
+              className={classNames("text-gray-400", "text-sm")}
             >
               Loading all Pokémon...
             </motion.span>

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import classNames from "classnames";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PiSquareFill, PiSquaresFourFill } from "react-icons/pi";
 
@@ -126,6 +126,10 @@ const Home = () => {
     return () => clearTimeout(timeout);
   }, [searchTerm]);
 
+  useLayoutEffect(() => {
+    if (searchTerm) setSearchTerm("");
+  }, []);
+
   return (
     <div
       ref={scrollContainerRef}
@@ -151,7 +155,9 @@ const Home = () => {
         )}
       >
         {/* Header */}
-        <div className={classNames("flex", "flex-row", "gap-x-5")}>
+        <div
+          className={classNames("flex", "flex-row", "gap-x-5", "items-center")}
+        >
           <div className={classNames("flex-1")}>
             <SortBy onSort={sortPokemons} />
           </div>

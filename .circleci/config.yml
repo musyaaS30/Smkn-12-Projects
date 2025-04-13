@@ -1,0 +1,61 @@
+version: 2.1
+
+executors:
+  node-executor:
+    docker:
+      - image: cimg/node:22.14.0
+
+jobs:
+  build:
+    executor: node-executor
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package-lock.json" }}
+      - run:
+          name: Install dependencies
+          command: yarn install
+      - save_cache:
+          key: v1-dependencies-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: Build Project
+          command: yarn build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist
+
+  deploy:
+    executor: node-executor
+    steps:
+      - attach_workspace:
+          at: /home/circleci/project
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:9k02DbQBswmKJDCaklIPIijz4RLVD2NKnYW87uByB88" # Replace with actual fingerprint
+      - run:
+          name: Deploy to Server
+          command: |
+            ssh -o StrictHostKeyChecking=no rzidinc@103.196.153.218 "
+              cd /home/rzidinc/Projects/sites/wcd_cakrawala_5 &&
+              rm -rf dist &&
+              mkdir dist"
+            scp -r dist/* rzidinc@103.196.153.218:/home/rzidinc/Projects/sites/wcd_cakrawala_5/dist
+
+workflows:
+  build_and_deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - main
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: main # Deploy only if merged to `main`

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import classNames from "classnames";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PiSquareFill, PiSquaresFourFill } from "react-icons/pi";
 
@@ -37,57 +37,64 @@ const Home = () => {
 
   // Methods
   const fetchAllPokemons = async () => {
-      let nextUrl: string | null = null;
-      const all: PokemonEntry[] = [];
+    let nextUrl: string | null = null;
+    const all: PokemonEntry[] = [];
 
-      try {
-        do {
-          const res = await triggerGetPokemons(nextUrl).unwrap();
-          const entries = res.results.map(
-            (p: { name: string; url: string }) => ({
-              name: p.name,
-              url: p.url,
-              id: parseInt(p.url.split("/")[6]), // Extracting ID from URL
-            })
-          );
-          all.push(...entries);
-          setCount(res.count);
-          nextUrl = res.next;
-        } while (nextUrl);
+    try {
+      do {
+        const res = await triggerGetPokemons(nextUrl).unwrap(),
+          entries = res.results.map((p: { name: string; url: string }) => ({
+            name: p.name,
+            url: p.url,
+            id: parseInt(p.url.split("/")[6]), // Extracting ID from URL
+          }));
+        all.push(...entries);
+        setCount(res.count);
+        nextUrl = res.next;
+      } while (nextUrl);
 
-        setAllPokemons(all);
-        setFilteredPokemons(all);
-        setRenderedPokemons(all.slice(0, CHUNK_SIZE));
-      } catch (err) {
-        console.error("Failed to fetch Pokémon list", err);
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    loadMore = () => {
-      setRenderedPokemons((prev) => {
-        const nextChunk = filteredPokemons.slice(
-          prev.length,
-          prev.length + CHUNK_SIZE
-        );
-        return [...prev, ...nextChunk];
-      });
-    },
-    sortPokemons = (sortType: string) => {
-      const sortedPokemons = [...filteredPokemons];
-      if (sortType === "id-asc") sortedPokemons.sort((a, b) => a.id - b.id);
-      else if (sortType === "id-desc")
-        sortedPokemons.sort((a, b) => b.id - a.id);
-      else if (sortType === "name-asc")
-        sortedPokemons.sort((a, b) => a.name.localeCompare(b.name));
-      else if (sortType === "name-desc")
-        sortedPokemons.sort((a, b) => b.name.localeCompare(a.name));
+      setAllPokemons(all);
+      setFilteredPokemons(all);
+      setRenderedPokemons(all.slice(0, CHUNK_SIZE));
+    } catch (err) {
+      console.error("Failed to fetch Pokémon list", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-      setFilteredPokemons(sortedPokemons);
-      setRenderedPokemons(sortedPokemons.slice(0, CHUNK_SIZE));
-    };
+  const loadMore = () => {
+    setRenderedPokemons((prev) => {
+      const nextChunk = filteredPokemons.slice(
+        prev.length,
+        prev.length + CHUNK_SIZE
+      );
+      return [...prev, ...nextChunk];
+    });
+  };
+
+  const sortPokemons = (sortType: string) => {
+    const sortedPokemons = [...filteredPokemons];
+    if (sortType === "id-asc") sortedPokemons.sort((a, b) => a.id - b.id);
+    else if (sortType === "id-desc") sortedPokemons.sort((a, b) => b.id - a.id);
+    else if (sortType === "name-asc")
+      sortedPokemons.sort((a, b) => a.name.localeCompare(b.name));
+    else if (sortType === "name-desc")
+      sortedPokemons.sort((a, b) => b.name.localeCompare(a.name));
+
+    setFilteredPokemons(sortedPokemons);
+    setRenderedPokemons(sortedPokemons.slice(0, CHUNK_SIZE));
+  };
 
   // Effects
+  useEffect(() => {
+    fetchAllPokemons();
+  }, []);
+
+  useEffect(() => {
+    setSearchTerm(""); // Reset search bar on page load
+  }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       const el = scrollContainerRef.current;
@@ -104,10 +111,8 @@ const Home = () => {
   }, [filteredPokemons]);
 
   useEffect(() => {
-    fetchAllPokemons();
-  }, []);
+    if (isLoading || allPokemons.length === 0) return;
 
-  useEffect(() => {
     const timeout = setTimeout(() => {
       if (!searchTerm) {
         setFilteredPokemons(allPokemons);
@@ -124,11 +129,7 @@ const Home = () => {
     }, 300);
 
     return () => clearTimeout(timeout);
-  }, [searchTerm]);
-
-  useLayoutEffect(() => {
-    if (searchTerm) setSearchTerm("");
-  }, []);
+  }, [searchTerm, allPokemons, isLoading]);
 
   return (
     <div

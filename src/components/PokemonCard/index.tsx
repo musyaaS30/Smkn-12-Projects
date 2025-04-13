@@ -62,8 +62,8 @@ const PokemonCard = ({ url, tileMode, count }: PokemonCardProps) => {
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
       className={classNames(
-        "relative",
         "w-full",
+        "relative",
         "cursor-pointer",
         "perspective-1000",
         tileMode === "single" ? "h-96" : "h-72"
@@ -76,9 +76,9 @@ const PokemonCard = ({ url, tileMode, count }: PokemonCardProps) => {
         animate={{ rotateY: isFlipped ? 180 : 0 }}
         transition={{ duration: 0.3 }}
         className={classNames(
-          "relative",
           "w-full",
           "h-full",
+          "relative",
           "transition-all",
           "transform-style-preserve-3d"
         )}
@@ -102,7 +102,14 @@ const PokemonCard = ({ url, tileMode, count }: PokemonCardProps) => {
           )}
         >
           {tileMode === "single" && (
-            <div className="flex flex-row items-center justify-between">
+            <div
+              className={classNames(
+                "flex",
+                "flex-row",
+                "items-center",
+                "justify-between"
+              )}
+            >
               <h1
                 className={classNames(
                   "text-lg",
@@ -115,7 +122,9 @@ const PokemonCard = ({ url, tileMode, count }: PokemonCardProps) => {
               >
                 {primaryType}
               </h1>
-              <h3 className="text-lg font-bold text-boatswain">
+              <h3
+                className={classNames("text-lg", "font-bold", "text-boatswain")}
+              >
                 #{`${id}`.padStart(`${count}`.length, "0")}
               </h3>
             </div>
@@ -138,7 +147,16 @@ const PokemonCard = ({ url, tileMode, count }: PokemonCardProps) => {
             />
           )}
 
-          <h1 className="text-lg font-bold capitalize text-center">{name}</h1>
+          <h1
+            className={classNames(
+              "text-lg",
+              "font-bold",
+              "capitalize",
+              "text-center"
+            )}
+          >
+            {name}
+          </h1>
         </div>
 
         {/* Back */}

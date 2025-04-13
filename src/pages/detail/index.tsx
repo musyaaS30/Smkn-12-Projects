@@ -80,7 +80,7 @@ const PokemonDetail = () => {
         )}
       >
         <div
-          className={classNames("flex", "flex-col", "md:flex-row", "flex-1")}
+          className={classNames("flex", "flex-col", "xl:flex-row", "flex-1")}
         >
           <h3 className={classNames("text-velvet-robe", "text-lg")}>
             #{id?.padStart(4, "0")}

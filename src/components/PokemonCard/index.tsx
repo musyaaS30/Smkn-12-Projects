@@ -3,6 +3,9 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router";
 import { useState, useEffect, useCallback } from "react";
 
+// Templates
+import SkeletonLoader from "./templates/SkeletonLoader";
+
 // Hooks
 import { usePokemonDetail } from "../../hooks/usePokemonDetail";
 
@@ -11,82 +14,6 @@ import getTypeClass from "../../utils/getTypeClass";
 
 // Types
 import PokemonCardProps from "./types";
-
-// Skeleton Loader Component
-const SkeletonLoader = ({ tileMode }: { tileMode: "single" | "multi" }) => (
-  <div
-    className={classNames(
-      "relative",
-      "w-full",
-      "cursor-pointer",
-      "perspective-1000",
-      tileMode === "single" ? "h-96" : "h-72"
-    )}
-  >
-    <div
-      className={classNames(
-        "relative",
-        "w-full",
-        "h-full",
-        "transition-all",
-        "transform-style-preserve-3d"
-      )}
-    >
-      {/* Front Skeleton */}
-      <div
-        className={classNames(
-          "flex",
-          "px-5",
-          "pb-5",
-          "w-full",
-          "h-full",
-          "gap-y-3",
-          "flex-col",
-          "absolute",
-          "rounded-lg",
-          "ease-in-out",
-          "backface-hidden",
-          "bg-cotton-ball",
-          tileMode === "single" ? "pt-5" : "pt-10"
-        )}
-      >
-        <div className="flex flex-row items-center justify-between">
-          <div className="h-4 w-16 bg-gray-300 rounded"></div>
-          <div className="h-4 w-12 bg-gray-300 rounded"></div>
-        </div>
-
-        {/* Skeleton Image */}
-        <div className="w-full h-64 px-10 bg-gray-300 animate-pulse rounded"></div>
-
-        <div className="h-4 w-24 bg-gray-300 rounded mt-2 mx-auto"></div>
-      </div>
-
-      {/* Back Skeleton */}
-      <div
-        className={classNames(
-          "flex",
-          "px-5",
-          "pb-5",
-          "w-full",
-          "h-full",
-          "absolute",
-          "flex-col",
-          "rounded-lg",
-          "rotate-y-180",
-          "backface-hidden",
-          "bg-cotton-ball",
-          tileMode === "single"
-            ? classNames("pt-5", "justify-center", "gap-y-5")
-            : classNames("pt-10", "justify-between")
-        )}
-      >
-        <div className="h-4 w-32 bg-gray-300 rounded mb-2"></div>
-        <div className="h-20 w-full bg-gray-300 animate-pulse rounded mb-5"></div>
-        <div className="h-8 w-32 bg-gray-300 animate-pulse rounded"></div>
-      </div>
-    </div>
-  </div>
-);
 
 const PokemonCard = ({ url, tileMode, count }: PokemonCardProps) => {
   // Hooks
@@ -98,7 +25,19 @@ const PokemonCard = ({ url, tileMode, count }: PokemonCardProps) => {
     [isFlipped, setIsFlipped] = useState(false),
     [isDesktop, setIsDesktop] = useState(true);
 
+  // Constants
   const imageKey = `${tileMode}-${id}`;
+
+  // Callbacks
+  const handleFlip = useCallback(() => {
+      if (!isDesktop) setIsFlipped((prev) => !prev);
+    }, [isDesktop]),
+    handleHover = useCallback(
+      (flip: boolean) => {
+        if (isDesktop) setIsFlipped(flip);
+      },
+      [isDesktop]
+    );
 
   // Effects
   useEffect(() => {
@@ -113,21 +52,9 @@ const PokemonCard = ({ url, tileMode, count }: PokemonCardProps) => {
     setLoaded(false);
   }, [imageSrc]);
 
-  // Callbacks
-  const handleFlip = useCallback(() => {
-    if (!isDesktop) setIsFlipped((prev) => !prev);
-  }, [isDesktop]);
-  const handleHover = useCallback(
-    (flip: boolean) => {
-      if (isDesktop) setIsFlipped(flip);
-    },
-    [isDesktop]
-  );
-
-  if (!imageSrc || !name || !primaryType) {
-    // If data is still loading, show the skeleton loader
+  // If data is still loading, show the skeleton loader
+  if (!imageSrc || !name || !primaryType)
     return <SkeletonLoader tileMode={tileMode} />;
-  }
 
   return (
     <motion.div

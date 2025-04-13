@@ -1,10 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+// Deps
+import classNames from "classnames";
+import { FiSearch } from "react-icons/fi";
+import { useNavigate } from "react-router";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiSearch } from "react-icons/fi";
+
+// Assets
 import Logo from "../../assets/icons/logo.png";
-import { useNavigate } from "react-router";
-import classNames from "classnames";
 
 const Navbar = ({
   onSearch,
@@ -13,14 +16,28 @@ const Navbar = ({
   noSearch?: boolean;
   onSearch: (val: string) => void;
 }) => {
+  // Hooks
   const navigate = useNavigate();
 
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
-  const inputRef = useRef<HTMLInputElement>(null);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  // Refs
+  const inputRef = useRef<HTMLInputElement>(null),
+    timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Escape closes search
+  // States
+  const [isSearchOpen, setIsSearchOpen] = useState(false),
+    [searchValue, setSearchValue] = useState("");
+
+  // Functions
+  const openSearch = () => {
+      setIsSearchOpen(true);
+      setTimeout(() => inputRef.current?.focus(), 100);
+    },
+    closeSearch = () => {
+      setIsSearchOpen(false);
+      setSearchValue("");
+    };
+
+  // Effects
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") closeSearch();
@@ -29,7 +46,6 @@ const Navbar = ({
     return () => window.removeEventListener("keydown", handleEscape);
   }, []);
 
-  // 3-second no-focus & empty input → close
   useEffect(() => {
     if (isSearchOpen && !searchValue) {
       timerRef.current = setTimeout(() => {
@@ -40,16 +56,6 @@ const Navbar = ({
     }
     return () => clearTimeout(timerRef.current!);
   }, [isSearchOpen, searchValue]);
-
-  const openSearch = () => {
-    setIsSearchOpen(true);
-    setTimeout(() => inputRef.current?.focus(), 100);
-  };
-
-  const closeSearch = () => {
-    setIsSearchOpen(false);
-    setSearchValue("");
-  };
 
   useEffect(() => {
     onSearch(searchValue);
@@ -74,12 +80,12 @@ const Navbar = ({
       <img
         src={Logo}
         alt="Pokemon Logo"
-        className="h-8 cursor-pointer"
+        className={classNames("h-8", "cursor-pointer")}
         onClick={() => navigate("/")}
       />
 
       {!noSearch && (
-        <div className="relative flex items-center">
+        <div className={classNames("relative", "flex", "items-center")}>
           {/* Search Icon */}
           <AnimatePresence>
             {!isSearchOpen && (
@@ -90,7 +96,7 @@ const Navbar = ({
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
                 transition={{ duration: 0.2 }}
-                className="text-white text-xl"
+                className={classNames("text-white", "text-xl")}
               >
                 <FiSearch />
               </motion.button>
@@ -109,7 +115,19 @@ const Navbar = ({
                   if (!searchValue) closeSearch();
                 }}
                 placeholder="Search..."
-                className="ml-2 px-4 py-1.5 text-sm rounded-md shadow-md focus:outline-none w-44 bg-white text-black placeholder-gray-500"
+                className={classNames(
+                  "w-44",
+                  "ml-2",
+                  "px-4",
+                  "py-1.5",
+                  "text-sm",
+                  "shadow-md",
+                  "bg-white",
+                  "rounded-md",
+                  "text-black",
+                  "focus:outline-none",
+                  "placeholder-gray-500"
+                )}
                 initial={{ opacity: 0, width: 0 }}
                 animate={{ opacity: 1, width: "176px" }}
                 exit={{ opacity: 0, width: 0 }}

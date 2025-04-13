@@ -1,10 +1,23 @@
+// Deps
+import classNames from "classnames";
+
 const SortBy = ({ onSort }: { onSort: (sortType: string) => void }) => {
   return (
-    <div className="relative w-full">
+    <div className={classNames("relative", "w-full")}>
       {/* Custom Chevron */}
-      <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+      <div
+        className={classNames(
+          "flex",
+          "pr-3",
+          "right-0",
+          "absolute",
+          "inset-y-0",
+          "items-center",
+          "pointer-events-none"
+        )}
+      >
         <svg
-          className="w-4 h-4 text-white"
+          className={classNames("w-4", "h-4", "text-white")}
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -21,7 +34,18 @@ const SortBy = ({ onSort }: { onSort: (sortType: string) => void }) => {
       {/* Select with appearance-none to hide the default chevron */}
       <select
         onChange={(e) => onSort(e.target.value)}
-        className="text-sm p-2 mr-2 bg-chronicle text-white rounded-xl w-full pr-8 pl-4 appearance-none" // Added appearance-none to hide the default arrow
+        className={classNames(
+          "p-2",
+          "mr-2",
+          "pr-8",
+          "pl-4",
+          "w-full",
+          "text-sm",
+          "rounded-xl",
+          "appearance-none",
+          "text-white",
+          "bg-chronicle"
+        )} // Added appearance-none to hide the default arrow
       >
         <option value="id-asc">Sort by ID Ascending</option>
         <option value="id-desc">Sort by ID Descending</option>

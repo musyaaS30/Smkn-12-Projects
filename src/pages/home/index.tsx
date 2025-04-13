@@ -28,7 +28,7 @@ const Home = () => {
     [isLoading, setIsLoading] = useState(true),
     [searchTerm, setSearchTerm] = useState(""),
     [allPokemons, setAllPokemons] = useState<PokemonEntry[]>([]),
-    [tileMode, setTileMode] = useState<"single" | "multi">("single"),
+    [tileMode, setTileMode] = useState<"single" | "multi">("multi"),
     [filteredPokemons, setFilteredPokemons] = useState<PokemonEntry[]>([]),
     [renderedPokemons, setRenderedPokemons] = useState<PokemonEntry[]>([]);
 

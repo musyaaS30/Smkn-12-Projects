@@ -79,7 +79,7 @@ const PokemonDetail = () => {
           "gap-y-5",
           "flex-col",
           "container",
-          "xl:flex-row",
+          "lg:flex-row",
           "items-center"
         )}
       >
@@ -90,7 +90,7 @@ const PokemonDetail = () => {
             "h-full",
             "w-full",
             "flex-col",
-            "xl:flex-row",
+            "lg:flex-row",
             "justify-between"
           )}
         >
@@ -101,7 +101,6 @@ const PokemonDetail = () => {
           <div
             className={classNames(
               "flex",
-              "px-12",
               "h-full",
               "md:px-24",
               "flex-col",
@@ -124,10 +123,9 @@ const PokemonDetail = () => {
               <img
                 className={classNames(
                   "w-full",
-                  "max-w-64",
-                  "md:max-w-64",
-                  "xl:max-w-full",
+                  "max-w-72",
                   "duration-700",
+                  "lg:max-w-full",
                   "aspect-square",
                   "object-contain",
                   "transition-opacity"
@@ -145,19 +143,19 @@ const PokemonDetail = () => {
         <div
           className={classNames(
             "flex",
-            "flex-1",
             "w-full",
             "flex-col",
-            "gap-y-10"
+            "gap-y-10",
+            "md:flex-1"
           )}
         >
           <h1
             className={classNames(
               "text-2xl",
-              "md:text-3xl",
-              "xl:text-4xl",
               "font-bold",
               "capitalize",
+              "md:text-3xl",
+              "lg:text-4xl",
               "text-white"
             )}
           >
@@ -169,10 +167,10 @@ const PokemonDetail = () => {
               "py-5",
               "flex",
               "px-10",
-              "flex-1",
               "gap-y-3",
-              "md:gap-y-5",
               "flex-col",
+              "md:flex-1",
+              "md:gap-y-5",
               "rounded-xl",
               "text-white",
               "bg-dark-rift"
@@ -220,8 +218,8 @@ const PokemonDetail = () => {
                     className={classNames(
                       "mt-1",
                       "text-2xl",
-                      "md:text-3xl",
                       "font-bold",
+                      "md:text-3xl",
                       "text-white"
                     )}
                   >

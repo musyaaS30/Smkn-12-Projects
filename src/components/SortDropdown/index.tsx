@@ -17,21 +17,21 @@ const SortBy = ({ onSort }: { onSort: (sortType: string) => void }) => {
         )}
       >
         <svg
-          className={classNames("w-4", "h-4", "text-white")}
-          xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          className={classNames("w-4", "h-4", "text-white")}
         >
           <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
             strokeWidth="2"
             d="M19 9l-7 7-7-7"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
       </div>
-      {/* Select with appearance-none to hide the default chevron */}
+
       <select
         onChange={(e) => onSort(e.target.value)}
         className={classNames(
@@ -42,10 +42,10 @@ const SortBy = ({ onSort }: { onSort: (sortType: string) => void }) => {
           "w-full",
           "text-sm",
           "rounded-xl",
-          "appearance-none",
           "text-white",
-          "bg-chronicle"
-        )} // Added appearance-none to hide the default arrow
+          "bg-chronicle",
+          "appearance-none"
+        )}
       >
         <option value="id-asc">Sort by ID Ascending</option>
         <option value="id-desc">Sort by ID Descending</option>

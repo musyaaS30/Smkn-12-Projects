@@ -60,6 +60,8 @@ const PokemonDetail = () => {
   return (
     <div
       className={classNames(
+        "flex",
+        "flex-col",
         "h-screen",
         "overflow-auto",
         "bg-spinel-stone-black"
@@ -72,21 +74,41 @@ const PokemonDetail = () => {
           "flex",
           "px-5",
           "py-10",
-          "gap-y-5",
+          "flex-1",
           "mx-auto",
+          "gap-y-5",
           "flex-col",
           "container",
-          "xl:flex-row"
+          "xl:flex-row",
+          "items-center"
         )}
       >
         <div
-          className={classNames("flex", "flex-col", "xl:flex-row", "flex-1")}
+          className={classNames(
+            "flex",
+            "flex-1",
+            "h-full",
+            "w-full",
+            "flex-col",
+            "xl:flex-row",
+            "justify-between"
+          )}
         >
           <h3 className={classNames("text-velvet-robe", "text-lg")}>
             #{id?.padStart(4, "0")}
           </h3>
 
-          <div className={classNames("px-24")}>
+          <div
+            className={classNames(
+              "flex",
+              "px-12",
+              "h-full",
+              "md:px-24",
+              "flex-col",
+              "items-center",
+              "justify-center"
+            )}
+          >
             {isLoading ? (
               <div
                 className={classNames(
@@ -102,7 +124,9 @@ const PokemonDetail = () => {
               <img
                 className={classNames(
                   "w-full",
-                  "min-w-64",
+                  "max-w-64",
+                  "md:max-w-64",
+                  "xl:max-w-full",
                   "duration-700",
                   "aspect-square",
                   "object-contain",
@@ -122,14 +146,16 @@ const PokemonDetail = () => {
           className={classNames(
             "flex",
             "flex-1",
-            "h-full",
+            "w-full",
             "flex-col",
             "gap-y-10"
           )}
         >
           <h1
             className={classNames(
-              "text-4xl",
+              "text-2xl",
+              "md:text-3xl",
+              "xl:text-4xl",
               "font-bold",
               "capitalize",
               "text-white"
@@ -144,7 +170,8 @@ const PokemonDetail = () => {
               "flex",
               "px-10",
               "flex-1",
-              "gap-y-5",
+              "gap-y-3",
+              "md:gap-y-5",
               "flex-col",
               "rounded-xl",
               "text-white",
@@ -156,7 +183,13 @@ const PokemonDetail = () => {
             ) : (
               <>
                 <div className={classNames("flex", "flex-col", "gap-y-2")}>
-                  <h3 className={classNames("text-2xl", "text-velvet-robe")}>
+                  <h3
+                    className={classNames(
+                      "text-xl",
+                      "md:text-2xl",
+                      "text-velvet-robe"
+                    )}
+                  >
                     Health
                   </h3>
                   <div
@@ -186,7 +219,8 @@ const PokemonDetail = () => {
                   <p
                     className={classNames(
                       "mt-1",
-                      "text-3xl",
+                      "text-2xl",
+                      "md:text-3xl",
                       "font-bold",
                       "text-white"
                     )}
@@ -194,7 +228,8 @@ const PokemonDetail = () => {
                     {hp}{" "}
                     <span
                       className={classNames(
-                        "text-xl",
+                        "text-lg",
+                        "md:text-xl",
                         "font-normal",
                         "text-cotton-ball/60"
                       )}
@@ -212,19 +247,31 @@ const PokemonDetail = () => {
                   className={classNames("flex", "flex-row", "justify-between")}
                 >
                   <div className={classNames("flex-1", "flex", "flex-col")}>
-                    <h3 className={classNames("text-2xl", "text-velvet-robe")}>
+                    <h3
+                      className={classNames(
+                        "text-xl",
+                        "md:text-2xl",
+                        "text-velvet-robe"
+                      )}
+                    >
                       Attack
                     </h3>
-                    <h3 className={classNames("text-3xl")}>
+                    <h3 className={classNames("text-2xl", "md:text-3xl")}>
                       {pokemon?.stats?.find((s) => s.stat.name === "attack")
                         ?.base_stat ?? 0}
                     </h3>
                   </div>
                   <div className={classNames("flex-1", "flex", "flex-col")}>
-                    <h3 className={classNames("text-2xl", "text-velvet-robe")}>
+                    <h3
+                      className={classNames(
+                        "text-xl",
+                        "md:text-2xl",
+                        "text-velvet-robe"
+                      )}
+                    >
                       Defense
                     </h3>
-                    <h3 className={classNames("text-3xl")}>
+                    <h3 className={classNames("text-2xl", "md:text-3xl")}>
                       {pokemon?.stats?.find((s) => s.stat.name === "defense")
                         ?.base_stat ?? 0}
                     </h3>

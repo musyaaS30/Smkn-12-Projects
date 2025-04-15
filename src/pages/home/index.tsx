@@ -146,12 +146,13 @@ const Home = () => {
         className={classNames(
           "flex",
           "pt-5",
-          "px-10",
+          "px-5",
           "pb-10",
           "md:p-5",
           "gap-y-5",
           "mx-auto",
           "flex-col",
+          "md:px-10",
           "container"
         )}
       >

@@ -175,14 +175,14 @@ const PokemonCard = ({ url, tileMode, count }: PokemonCardProps) => {
             "bg-cotton-ball",
             tileMode === "single"
               ? classNames("pt-5", "justify-center", "gap-y-5")
-              : classNames("pt-10", "justify-between")
+              : classNames("pt-5", "md:pt-10", "justify-between")
           )}
         >
           <h2
             className={classNames(
+              "mb-2",
               "text-xl",
               "font-bold",
-              "mb-2",
               tileMode === "multi" && "text-sm md:text-base"
             )}
           >
@@ -203,14 +203,15 @@ const PokemonCard = ({ url, tileMode, count }: PokemonCardProps) => {
               "py-2",
               "mt-5",
               "border",
-              "text-sm",
+              "text-xs",
+              "md:text-sm",
               "rounded-full",
               "cursor-pointer",
               "transition-all",
               "text-liberty-blue",
               "border-liberty-blue",
-              "hover:text-cotton-ball",
-              "hover:bg-liberty-blue"
+              "hover:bg-liberty-blue",
+              "hover:text-cotton-ball"
             )}
             onClick={(e) => {
               e.stopPropagation();

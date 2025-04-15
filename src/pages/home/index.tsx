@@ -196,12 +196,12 @@ const Home = () => {
             <AnimatePresence initial={false}>
               {renderedPokemons.map(({ url }) => (
                 <motion.div
-                  key={url}
                   layout
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                  key={url}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.2 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  initial={{ opacity: 0, scale: 0.95 }}
                 >
                   <PokemonCard count={count} url={url} tileMode={tileMode} />
                 </motion.div>
@@ -217,11 +217,11 @@ const Home = () => {
               transition={{ duration: 0.4 }}
               className={classNames(
                 "flex",
-                "justify-center",
-                "items-center",
                 "h-64",
-                "text-gray-400",
-                "text-lg"
+                "text-lg",
+                "items-center",
+                "justify-center",
+                "text-gray-400"
               )}
             >
               No Pokémon found with that name.
@@ -229,7 +229,6 @@ const Home = () => {
           )
         )}
 
-        {/* Loading spinner */}
         {isLoading && (
           <div
             className={classNames(

@@ -24,112 +24,55 @@ const Home = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   // States
-  const [count, setCount] = useState(0),
-    [isLoading, setIsLoading] = useState(true),
+  const
     [searchTerm, setSearchTerm] = useState(""),
-    [allPokemons, setAllPokemons] = useState<PokemonEntry[]>([]),
     [tileMode, setTileMode] = useState<"single" | "multi">("multi"),
-    [filteredPokemons, setFilteredPokemons] = useState<PokemonEntry[]>([]),
-    [renderedPokemons, setRenderedPokemons] = useState<PokemonEntry[]>([]);
+    [projects, setProjects] = useState(
+
+      [
+        {
+        name: "Pelanggaran",
+        url: "https://www.pajak.go.id/id/reformdjp/coretax",
+        imgurl: "https://th.bing.com/th/id/OIP.znIiQDbH0TF3GlkqiJKpbAHaEK?w=301&h=180&c=7&r=0&o=7&cb=iwp2&dpr=1.1&pid=1.7&rm=3",
+        desc: "hello world"
+      },
+        {
+        name: "ketertiban",
+        url: "https://www.pajak.go.id/id/reformdjp/coretax",
+        imgurl: "https://th.bing.com/th/id/OIP.znIiQDbH0TF3GlkqiJKpbAHaEK?w=301&h=180&c=7&r=0&o=7&cb=iwp2&dpr=1.1&pid=1.7&rm=3",
+        desc: "hello world"
+      },
+        {
+        name: "Piket",
+        url: "https://www.pajak.go.id/id/reformdjp/coretax",
+        imgurl: "https://th.bing.com/th/id/OIP.znIiQDbH0TF3GlkqiJKpbAHaEK?w=301&h=180&c=7&r=0&o=7&cb=iwp2&dpr=1.1&pid=1.7&rm=3",
+        desc: "hello world"
+      },
+        {
+        name: "kehadiran",
+        url: "https://www.pajak.go.id/id/reformdjp/coretax",
+        imgurl: "https://th.bing.com/th/id/OIP.znIiQDbH0TF3GlkqiJKpbAHaEK?w=301&h=180&c=7&r=0&o=7&cb=iwp2&dpr=1.1&pid=1.7&rm=3",
+        desc: "hello world"
+      },
+        {
+        name: "mie ayam",
+        url: "https://www.pajak.go.id/id/reformdjp/coretax",
+        imgurl: "https://th.bing.com/th/id/OIP.znIiQDbH0TF3GlkqiJKpbAHaEK?w=301&h=180&c=7&r=0&o=7&cb=iwp2&dpr=1.1&pid=1.7&rm=3",
+        desc: "hello world"
+      }
+    
+    ]
+
+    );
 
   // APIs
-  const [triggerGetPokemons] = useLazyGetPokemonsQuery();
 
-  // Methods
-  const fetchAllPokemons = async () => {
-    let nextUrl: string | null = null;
-    const all: PokemonEntry[] = [];
 
-    try {
-      do {
-        const res = await triggerGetPokemons(nextUrl).unwrap(),
-          entries = res.results.map((p: { name: string; url: string }) => ({
-            name: p.name,
-            url: p.url,
-            id: parseInt(p.url.split("/")[6]), // Extracting ID from URL
-          }));
-        all.push(...entries);
-        setCount(res.count);
-        nextUrl = res.next;
-      } while (nextUrl);
 
-      setAllPokemons(all);
-      setFilteredPokemons(all);
-      setRenderedPokemons(all.slice(0, CHUNK_SIZE));
-    } catch (err) {
-      console.error("Failed to fetch Pokémon list", err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const loadMore = () => {
-    setRenderedPokemons((prev) => {
-      const nextChunk = filteredPokemons.slice(
-        prev.length,
-        prev.length + CHUNK_SIZE
-      );
-      return [...prev, ...nextChunk];
-    });
-  };
-
-  const sortPokemons = (sortType: string) => {
-    const sortedPokemons = [...filteredPokemons];
-    if (sortType === "id-asc") sortedPokemons.sort((a, b) => a.id - b.id);
-    else if (sortType === "id-desc") sortedPokemons.sort((a, b) => b.id - a.id);
-    else if (sortType === "name-asc")
-      sortedPokemons.sort((a, b) => a.name.localeCompare(b.name));
-    else if (sortType === "name-desc")
-      sortedPokemons.sort((a, b) => b.name.localeCompare(a.name));
-
-    setFilteredPokemons(sortedPokemons);
-    setRenderedPokemons(sortedPokemons.slice(0, CHUNK_SIZE));
-  };
-
-  // Effects
-  useEffect(() => {
-    fetchAllPokemons();
-  }, []);
-
+  
   useEffect(() => {
     setSearchTerm(""); // Reset search bar on page load
   }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const el = scrollContainerRef.current;
-      if (!el) return;
-
-      if (el.scrollTop + el.clientHeight >= el.scrollHeight - 200) loadMore();
-    };
-
-    const el = scrollContainerRef.current;
-    if (el) el.addEventListener("scroll", handleScroll);
-    return () => {
-      if (el) el.removeEventListener("scroll", handleScroll);
-    };
-  }, [filteredPokemons]);
-
-  useEffect(() => {
-    if (isLoading || allPokemons.length === 0) return;
-
-    const timeout = setTimeout(() => {
-      if (!searchTerm) {
-        setFilteredPokemons(allPokemons);
-        setRenderedPokemons(allPokemons.slice(0, CHUNK_SIZE));
-        return;
-      }
-
-      const filtered = allPokemons.filter((p) =>
-        p.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-
-      setFilteredPokemons(filtered);
-      setRenderedPokemons(filtered.slice(0, CHUNK_SIZE));
-    }, 300);
-
-    return () => clearTimeout(timeout);
-  }, [searchTerm, allPokemons, isLoading]);
 
   return (
     <div
@@ -161,7 +104,7 @@ const Home = () => {
           className={classNames("flex", "flex-row", "gap-x-5", "items-center")}
         >
           <div className={classNames("flex-1")}>
-            <SortBy onSort={sortPokemons} />
+            {/* <SortBy onSort={sortPokemons} /> */}
           </div>
           <div>
             <ButtonPill
@@ -177,8 +120,6 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Grid or No Result */}
-        {renderedPokemons.length > 0 ? (
           <div
             className={classNames(
               "grid gap-4",
@@ -194,63 +135,22 @@ const Home = () => {
             )}
           >
             <AnimatePresence initial={false}>
-              {renderedPokemons.map(({ url }) => (
+              {
+            
+            projects.filter(el=> el.name.includes(searchTerm)).map(({ imgurl, name, url, desc }, i) => (
                 <motion.div
                   layout
-                  key={url}
+                  key={`${imgurl}-${i}`}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.2 }}
                   animate={{ opacity: 1, scale: 1 }}
                   initial={{ opacity: 0, scale: 0.95 }}
                 >
-                  <PokemonCard count={count} url={url} tileMode={tileMode} />
+                  <PokemonCard imgurl={imgurl} name={name} tileMode={tileMode} url={url} desc={desc}/>
                 </motion.div>
               ))}
             </AnimatePresence>
           </div>
-        ) : (
-          !isLoading && (
-            <motion.div
-              key="empty"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4 }}
-              className={classNames(
-                "flex",
-                "h-64",
-                "text-lg",
-                "items-center",
-                "justify-center",
-                "text-gray-400"
-              )}
-            >
-              No Pokémon found with that name.
-            </motion.div>
-          )
-        )}
-
-        {isLoading && (
-          <div
-            className={classNames(
-              "h-16",
-              "mt-4",
-              "flex",
-              "w-full",
-              "items-center",
-              "justify-center"
-            )}
-          >
-            <motion.span
-              key="loading"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-              className={classNames("text-gray-400", "text-sm")}
-            >
-              Loading all Pokémon...
-            </motion.span>
-          </div>
-        )}
       </div>
     </div>
   );

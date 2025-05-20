@@ -8,7 +8,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Assets
-import Logo from "../../assets/icons/logo.png";
+import Logo from "../../assets/icons/smkn12logo.png";
 
 const Navbar = ({
   onSearch,

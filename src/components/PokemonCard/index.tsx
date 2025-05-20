@@ -15,10 +15,9 @@ import getTypeClass from "../../utils/getTypeClass";
 // Types
 import PokemonCardProps from "./types";
 
-const PokemonCard = ({ url, tileMode, count }: PokemonCardProps) => {
+const PokemonCard = ({ imgurl, tileMode, name, url, desc }: PokemonCardProps) => {
   // Hooks
-  const navigate = useNavigate(),
-    { imageSrc, id, name, primaryType } = usePokemonDetail(url);
+  const navigate = useNavigate()
 
   // States
   const [loaded, setLoaded] = useState(false),
@@ -26,7 +25,7 @@ const PokemonCard = ({ url, tileMode, count }: PokemonCardProps) => {
     [isDesktop, setIsDesktop] = useState(true);
 
   // Constants
-  const imageKey = `${tileMode}-${id}`;
+  const imageKey = `${tileMode} ${name}`;
 
   // Callbacks
   const handleFlip = useCallback(() => {
@@ -50,12 +49,12 @@ const PokemonCard = ({ url, tileMode, count }: PokemonCardProps) => {
 
   useEffect(() => {
     setLoaded(false);
-  }, [imageSrc]);
+  }, []);
 
   // If data is still loading, show the skeleton loader
-  if (!imageSrc || !name || !primaryType)
+  if (!name )
     return <SkeletonLoader tileMode={tileMode} />;
-
+ 
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
@@ -117,24 +116,23 @@ const PokemonCard = ({ url, tileMode, count }: PokemonCardProps) => {
                   "capitalize",
                   "duration-300",
                   "transition-colors",
-                  getTypeClass(primaryType)
                 )}
               >
-                {primaryType}
+                
               </h1>
               <h3
                 className={classNames("text-lg", "font-bold", "text-boatswain")}
               >
-                #{`${id}`.padStart(`${count}`.length, "0")}
+                
               </h3>
             </div>
           )}
 
-          {imageSrc && (
+          {imgurl && (
             <img
               loading="lazy"
               key={imageKey}
-              src={imageSrc}
+              src={imgurl}
               onLoad={() => setLoaded(true)}
               className={classNames(
                 "duration-500",
@@ -186,7 +184,7 @@ const PokemonCard = ({ url, tileMode, count }: PokemonCardProps) => {
               tileMode === "multi" && "text-sm md:text-base"
             )}
           >
-            Pokemon Details
+            Project Details
           </h2>
           <p
             className={classNames(
@@ -194,8 +192,7 @@ const PokemonCard = ({ url, tileMode, count }: PokemonCardProps) => {
               tileMode === "multi" && "text-sm"
             )}
           >
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Assumenda
-            est excepturi
+            {desc}
           </p>
           <button
             className={classNames(
@@ -216,7 +213,7 @@ const PokemonCard = ({ url, tileMode, count }: PokemonCardProps) => {
             onClick={(e) => {
               e.stopPropagation();
 
-              navigate(`/${id}`);
+              navigate(url);
             }}
           >
             See More Detail

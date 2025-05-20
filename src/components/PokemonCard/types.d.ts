@@ -1,5 +1,7 @@
 export default interface PokemonCardProps {
   url: string;
+  imgurl: string;
   tileMode: "single" | "multi";
-  count: number;
+  name: string;
+  desc: string;
 }

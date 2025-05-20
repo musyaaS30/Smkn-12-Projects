@@ -15,6 +15,7 @@ import { useLazyGetPokemonsQuery } from "../../../store/apis/pokemon";
 
 // Types
 import PokemonEntry from "./types";
+import projectlist from "../../constants/projects";
 
 // Constants
 const CHUNK_SIZE = 20;
@@ -29,40 +30,8 @@ const Home = () => {
     [tileMode, setTileMode] = useState<"single" | "multi">("multi"),
     [projects, setProjects] = useState(
 
-      [
-        {
-        name: "Pelanggaran",
-        url: "https://www.pajak.go.id/id/reformdjp/coretax",
-        imgurl: "https://th.bing.com/th/id/OIP.znIiQDbH0TF3GlkqiJKpbAHaEK?w=301&h=180&c=7&r=0&o=7&cb=iwp2&dpr=1.1&pid=1.7&rm=3",
-        desc: "hello world"
-      },
-        {
-        name: "ketertiban",
-        url: "https://www.pajak.go.id/id/reformdjp/coretax",
-        imgurl: "https://th.bing.com/th/id/OIP.znIiQDbH0TF3GlkqiJKpbAHaEK?w=301&h=180&c=7&r=0&o=7&cb=iwp2&dpr=1.1&pid=1.7&rm=3",
-        desc: "hello world"
-      },
-        {
-        name: "Piket",
-        url: "https://www.pajak.go.id/id/reformdjp/coretax",
-        imgurl: "https://th.bing.com/th/id/OIP.znIiQDbH0TF3GlkqiJKpbAHaEK?w=301&h=180&c=7&r=0&o=7&cb=iwp2&dpr=1.1&pid=1.7&rm=3",
-        desc: "hello world"
-      },
-        {
-        name: "kehadiran",
-        url: "https://www.pajak.go.id/id/reformdjp/coretax",
-        imgurl: "https://th.bing.com/th/id/OIP.znIiQDbH0TF3GlkqiJKpbAHaEK?w=301&h=180&c=7&r=0&o=7&cb=iwp2&dpr=1.1&pid=1.7&rm=3",
-        desc: "hello world"
-      },
-        {
-        name: "mie ayam",
-        url: "https://www.pajak.go.id/id/reformdjp/coretax",
-        imgurl: "https://th.bing.com/th/id/OIP.znIiQDbH0TF3GlkqiJKpbAHaEK?w=301&h=180&c=7&r=0&o=7&cb=iwp2&dpr=1.1&pid=1.7&rm=3",
-        desc: "hello world"
-      }
-    
-    ]
-
+      projectlist
+      
     );
 
   // APIs
@@ -137,7 +106,7 @@ const Home = () => {
             <AnimatePresence initial={false}>
               {
             
-            projects.filter(el=> el.name.includes(searchTerm)).map(({ imgurl, name, url, desc }, i) => (
+            projects.filter(el=> el.name.toLowerCase().includes(searchTerm)).map(({ imgurl, name, url, desc }, i) => (
                 <motion.div
                   layout
                   key={`${imgurl}-${i}`}

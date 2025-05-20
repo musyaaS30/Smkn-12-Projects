@@ -1,8 +1,10 @@
+import PelanggaranImage from "../assets/icons/bird-colorful-logo-gradient-vector_343694-1365.avif"
+
 const projectlist = [
     {
     name: "Pelanggaran",
     url: "https://www.pajak.go.id/id/reformdjp/coretax",
-    imgurl: require("../assets/icons/bird-colorful-logo-gradient-vector_343694-1365.avif"),
+    imgurl: PelanggaranImage,
     desc: "hello world"
   },
     {
